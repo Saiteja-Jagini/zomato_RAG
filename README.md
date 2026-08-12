@@ -55,3 +55,4 @@ Open `http://localhost:3000` and try a request such as:
 
 The `plotting_agent` will query the local database and return a generated PNG
 from the `outputs/` directory.
+
