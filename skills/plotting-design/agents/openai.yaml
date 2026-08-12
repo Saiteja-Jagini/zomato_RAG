@@ -1,0 +1,4 @@
+interface:
+  display_name: "Plotting Design"
+  short_description: "Create clear, polished statistical charts"
+  default_prompt: "Use $plotting-design to create a polished chart from my data."

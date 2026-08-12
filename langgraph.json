@@ -1,0 +1,8 @@
+{
+  "dependencies": ["."],
+  "graphs": {
+    "agent": "./tools/sql_tool.py:sql_agent",
+    "plotting_agent": "./main.py:analytics_agent",
+    "analytics_agent": "./main.py:analytics_agent"
+  }
+}

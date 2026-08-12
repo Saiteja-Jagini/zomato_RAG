@@ -1,0 +1,20 @@
+[project]
+name = "langgraph-basic"
+version = "0.1.0"
+description = "A basic LangGraph project"
+requires-python = ">=3.11"
+dependencies = [
+    "deepagents>=0.7.5",
+    "langgraph>=1.2.10",
+    "langchain-openai>=1.4.2",
+    "matplotlib>=3.10",
+    "pandas>=2.3",
+    "python-dotenv>=1.1",
+    "requests>=2.32",
+    "seaborn>=0.13",
+]
+
+[dependency-groups]
+dev = [
+    "langgraph-cli[inmem]>=0.4.31",
+]
