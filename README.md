@@ -1,21 +1,54 @@
-# Basic LangGraph project
+# Zomato analytics and plotting agent
 
-This project contains a small deterministic graph that can be run locally
-without an API key.
+This project contains LangGraph agents that answer questions from a local
+SQLite restaurant database and generate PNG charts. It requires an OpenAI API
+key.
 
 ## Run it
+
+Create `.env` from `.env.example`, add your API key, and initialize the
+database schema:
+
+```powershell
+Copy-Item .env.example .env
+uv run python tables.py
+```
 
 ```powershell
 uv run langgraph dev
 ```
 
-The graph is exposed as `agent` and is configured in `langgraph.json`.
+The SQL graph is exposed as `agent`; the visualization graph is exposed as
+`plotting_agent` and `analytics_agent` in `langgraph.json`.
 
 You can also run the graph directly:
 
 ```powershell
 uv run python main.py
 ```
+
+## Database-backed plotting skill
+
+The reusable `plotting-design` skill is stored in the `skills` table with its
+prompt, configuration, input/output schemas, scope, status, and autonomy
+requirements. The `skill_executions` table records each plotting success or
+failure.
+
+On first initialization, `skills/plotting-design/SKILL.md` seeds the database
+record. The existing database row is never overwritten on later starts, so it
+becomes the runtime source of truth. Restart the LangGraph server after changing
+the stored prompt because the active prompt is loaded when the agent starts.
+
+For every chart request, the application:
+
+1. Loads the active skill prompt and metadata from SQLite.
+2. Combines the prompt with the user's request.
+3. Queries restaurant data using the read-only SQL tools.
+4. Validates the generated plotting input against the stored schema.
+5. Executes the plot in an isolated process using the stored configuration.
+6. Validates and saves the result, then records success or failure.
+7. Recalculates the skill's autonomy level from its stored requirements and
+   execution history.
 
 ## Test the plotting agent with Agent Chat UI
 
@@ -55,4 +88,3 @@ Open `http://localhost:3000` and try a request such as:
 
 The `plotting_agent` will query the local database and return a generated PNG
 from the `outputs/` directory.
-

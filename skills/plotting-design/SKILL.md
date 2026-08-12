@@ -15,7 +15,9 @@ description: Create or improve Matplotlib and Seaborn charts from tabular data. 
 3. Aggregate explicitly and document filters. Never silently discard invalid rows.
 4. Use a colorblind-friendly palette, readable type sizes, clear units, and concise titles.
 5. Avoid 3D effects, decorative backgrounds, misleading axes, and unnecessary legends.
-6. Use `fig, ax = plt.subplots(...)`, `fig.tight_layout()`, and save at 150 DPI or higher.
-7. Create `/outputs` when needed, save the figure as PNG, and call `plt.close(fig)`.
-8. Verify the output file exists and report its path with the main visual insight.
-
+6. Use `fig, ax = plt.subplots(...)` and `fig.tight_layout()`.
+7. When using `execute_plot_script`, do not import modules, call `show()`, call
+   `savefig()`, or access files. The isolated runner saves and closes the figure
+   using the DPI configured in the database-backed skill record.
+8. Verify the tool reports success and return its PNG path with the main visual
+   insight.

@@ -1,6 +1,8 @@
 import pathlib
 import sqlite3
 
+from skill_store import initialize_skill_store
+
 db_path = (
     pathlib.Path(__file__).resolve().parent
     / "database"
@@ -89,5 +91,7 @@ db_path.parent.mkdir(parents=True, exist_ok=True)
 
 with sqlite3.connect(db_path) as connection:
     connection.executescript(schema)
+
+initialize_skill_store(db_path=db_path)
 
 print(f"Tables created in: {db_path}")

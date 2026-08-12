@@ -53,6 +53,9 @@ def main() -> int:
     request = json.loads(request_path.read_text(encoding="utf-8"))
     script = request["python_script"]
     data = request["data"]
+    dpi = int(request.get("configuration", {}).get("dpi", 160))
+    if not 72 <= dpi <= 300:
+        raise ValueError("Configured DPI must be between 72 and 300.")
     tree = validate_plot_script(script)
 
     safe_globals = {
@@ -70,7 +73,7 @@ def main() -> int:
         raise RuntimeError("The script did not create a Matplotlib figure.")
     figure = namespace.get("fig", figures[-1])
     output_path.parent.mkdir(parents=True, exist_ok=True)
-    figure.savefig(output_path, format="png", dpi=160, bbox_inches="tight")
+    figure.savefig(output_path, format="png", dpi=dpi, bbox_inches="tight")
     plt.close("all")
     return 0
 
