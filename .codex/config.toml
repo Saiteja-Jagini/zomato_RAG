@@ -1,0 +1,6 @@
+[mcp_servers.lumora]
+command = "npx"
+args = ["-y", "http://localhost:3000/install/lumora-mcp-0.1.2.tgz"]
+
+[mcp_servers.lumora.env]
+LUMORA_URL = "http://localhost:3000"
